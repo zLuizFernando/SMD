@@ -1,0 +1,101 @@
+import React, { useState } from 'react';
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+
+// Componente de Cabeçalho
+const Header = ({ toggleModal, toggleSearch, navigateToHome, cartItems }) => {
+  return (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15, backgroundColor: 'rgba(200, 0, 0, 1.0)', height: '12%' }}>
+      <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, borderRadius: 25 }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>Don'Vinhos</Text>
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <AntDesign name="user" size={30} color="black" style={{ marginRight: 10 }} />
+        <TouchableOpacity onPress={toggleSearch}>
+          <AntDesign name="search1" size={24} color="black" style={{ marginRight: 10 }} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleModal}>
+          <AntDesign name="menu" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={navigateToHome}>
+          <View style={{ position: 'relative', marginRight: 10 }}>
+            <AntDesign name="shoppingcart" size={24} color="black">
+              {cartItems.length > 0 && (
+                <View style={{ position: 'absolute', top: -5, right: -5, backgroundColor: 'red', borderRadius: 10, padding: 5 }}>
+                  <Text style={{ color: 'white', fontSize: 12 }}>{cartItems.length}</Text>
+                </View>
+              )}
+            </AntDesign>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const DicasAcompanhamentoScreen = ({ navigateToHome, toggleModal, toggleSearch }) => {
+  const [cartItems, setCartItems] = useState([]);
+
+  const vinhos = [
+    { id: '1', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '2', name: 'Vinho Branco', price: 'R$ 145,00', image: require('./fundo.jpg') },
+    { id: '3', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '4', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '5', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '6', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '7', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '8', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    { id: '9', name: 'Vinho Tinto', price: 'R$ 250,00', image: require('./DonTinto.png') },
+    // Adicione mais vinhos conforme necessário    
+  ];
+
+  const addToCart = (vinho) => {
+    setCartItems([...cartItems, vinho]);
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Header toggleModal={toggleModal} toggleSearch={toggleSearch} navigateToHome={navigateToHome} cartItems={cartItems} />
+
+      <Text style={{ fontSize: 30, fontWeight: 'bold', margin: 20, textAlign: 'center' }}>Acompanhamento para Massas</Text>
+
+      <ScrollView style={{ marginHorizontal: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+          {vinhos.slice(0, 3).map((vinho) => (
+            <TouchableOpacity key={vinho.id} style={{ flex: 1 }} onPress={() => addToCart(vinho)}>
+              <Image source={vinho.image} style={{ width: '100%', height: 100, borderRadius: 10, marginBottom: 5 }} />
+              <Text style={{ fontSize: 16 }}>{vinho.name}</Text>
+              <Text>{vinho.price}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+          {vinhos.slice(3, 6).map((vinho) => (
+            <TouchableOpacity key={vinho.id} style={{ flex: 1 }} onPress={() => addToCart(vinho)}>
+              <Image source={vinho.image} style={{ width: '100%', height: 100, borderRadius: 10, marginBottom: 5 }} />
+              <Text style={{ fontSize: 16 }}>{vinho.name}</Text>
+              <Text>{vinho.price}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          {vinhos.slice(6, 9).map((vinho) => (
+            <TouchableOpacity key={vinho.id} style={{ flex: 1 }} onPress={() => addToCart(vinho)}>
+              <Image source={vinho.image} style={{ width: '100%', height: 100, borderRadius: 10, marginBottom: 5 }} />
+              <Text style={{ fontSize: 16 }}>{vinho.name}</Text>
+              <Text>{vinho.price}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <TouchableOpacity onPress={navigateToHome} style={{ margin: 20, padding: 10, backgroundColor: 'rgba(200, 0, 0, 1.0)', borderRadius: 10 }}>
+        <Text style={{ color: 'white', fontSize: 18, textAlign: 'center' }}>Voltar para a tela principal</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
+export default DicasAcompanhamentoScreen;

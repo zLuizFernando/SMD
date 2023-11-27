@@ -1,0 +1,114 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, ImageBackground, Image, ActivityIndicator } from 'react-native';
+
+const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(''); // Adicionando user state
+  const [status, setStatus] = useState(''); // Adicionando status state
+  const [activity, setActivity] = useState(false); // Adicionando activity state
+
+  const handleLogin = () => {
+    // Lógica de autenticação aqui, pode ser feita uma requisição para um servidor, validação local, etc.
+    // Por enquanto, apenas exibe os dados digitados
+    console.log('Email:', email);
+    console.log('Password:', password);
+  };
+
+  return (
+    <View style={styles.container}>
+       <Text style={styles.paragraph}>Don'vinho</Text>
+      <ImageBackground source={require("./fundoVinho.jpg")} resizeMode="cover" style={styles.appImage} imageStyle={{ opacity: 0.3 }}>
+        <Image style={styles.logo} source={require('./logoVinho.jpg')} />
+        <Text style={styles.loginLabel}>E-mail:</Text>
+        <TextInput
+          autoCorrect={false}
+          placeholder={'MENSAGEM_EMAIL'} // Supondo que 'MENSAGEM_EMAIL' seja uma string definida
+          placeholderTextColor="grey"
+          style={styles.textInput}
+          clearButtonMode="always"
+          defaultValue={'EMAIL'} // Supondo que 'EMAIL' seja uma string definida
+          onChangeText={(value) => setEmail(value)} // Corrigindo para setEmail
+        />
+        <Text style={styles.loginLabel}>Senha:</Text>
+        <TextInput
+          autoCorrect={false}
+          placeholder={'MENSAGEM_SENHA'} // Supondo que 'MENSAGEM_SENHA' seja uma string definida
+          placeholderTextColor="grey"
+          secureTextEntry={true}
+          style={styles.textInput}
+          clearButtonMode="always"
+          defaultValue={'SENHA'} // Supondo que 'SENHA' seja uma string definida
+          onChangeText={(value) => setPassword(value)} // Corrigindo para setPassword
+        />
+        <View style={styles.button}>
+          <Button onPress={handleLogin} title="OK" />
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <ActivityIndicator size="large" animating={activity} />
+        </View>
+        <Text style={styles.loginLabel}>{status}</Text>
+      </ImageBackground>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+   container: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#202020'
+    },
+ 
+  appImage: {
+      flex: 1,
+      justifyContent: "center",
+      backgroundColor: 'black'
+    
+  },
+  logo:  {
+      width: 250,
+      height: 100,
+      alignSelf: 'center'
+    },
+  loginLabel: {
+        color: 'white',
+        marginTop: 10,
+        fontSize: 15,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+ paragraph: {
+        margin: 24,
+        fontSize: 68,
+        
+        marginTop: 10,
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+ 
+  textInput:  {
+        backgroundColor: 'white',
+        color: 'black',
+        fontSize: 15,
+        height: 30,
+        width: 355,
+        marginTop: 10,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        alignSelf: 'center'
+    },
+  button: {
+        fontSize: 15,
+        width: 120,
+        height: 40,
+        marginTop: 20,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        alignSelf: 'center'
+    },
+});
+
+export default LoginScreen;

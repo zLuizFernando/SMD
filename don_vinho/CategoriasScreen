@@ -1,0 +1,98 @@
+import React, { useState } from 'react';
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+
+// Componente de Cabeçalho
+const Header = ({ toggleModal, toggleSearch, navigateToHome, cartItems }) => {
+  return (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15, backgroundColor: 'rgba(200, 0, 0, 1.0)', height: '12%' }}>
+      <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, borderRadius: 25 }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>Don'Vinhos</Text>
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <AntDesign name="user" size={30} color="black" style={{ marginRight: 10 }} />
+        <TouchableOpacity onPress={toggleSearch}>
+          <AntDesign name="search1" size={24} color="black" style={{ marginRight: 10 }} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleModal}>
+          <AntDesign name="menu" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={navigateToHome}>
+          <View style={{ position: 'relative', marginRight: 10 }}>
+            <AntDesign name="shoppingcart" size={24} color="black">
+              {cartItems.length > 0 && (
+                <View style={{ position: 'absolute', top: -5, right: -5, backgroundColor: 'red', borderRadius: 10, padding: 5 }}>
+                  <Text style={{ color: 'white', fontSize: 12 }}>{cartItems.length}</Text>
+                </View>
+              )}
+            </AntDesign>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const CategoriasScreen = ({ navigateToHome, toggleModal, toggleSearch }) => {
+  const [cartItems, setCartItems] = useState([]);
+
+  const fileiras = ['Vinhos Secos', 'Vinhos Encorpados', 'Vinhos Especiais', 'Vinhos Rose'];
+
+  const vinhosPorFileira = [
+    [
+      { id: '1', name: 'Vinho Tinto 1', price: 'R$ 250,00', image: require('./DonTinto.png') },
+      { id: '2', name: 'Vinho Branco 1', price: 'R$ 145,00', image: require('./fundo.jpg') },
+      { id: '3', name: 'Vinho Rosé 1', price: 'R$ 180,00', image: require('./fundoLogin.jpg') },
+    ],
+    [
+      { id: '1', name: 'Vinho Tinto 1', price: 'R$ 250,00', image: require('./DonTinto.png') },
+      { id: '2', name: 'Vinho Branco 1', price: 'R$ 145,00', image: require('./fundo.jpg') },
+      { id: '3', name: 'Vinho Rosé 1', price: 'R$ 180,00', image: require('./fundoLogin.jpg') },
+    ],
+    [
+      { id: '4', name: 'Vinho Tinto 2', price: 'R$ 280,00', image: require('./DonTinto.png') },
+      { id: '5', name: 'Vinho Branco 2', price: 'R$ 160,00', image: require('./fundo.jpg') },
+      { id: '6', name: 'Vinho Rosé 2', price: 'R$ 200,00', image: require('./fundoLogin.jpg') },
+    ],
+    [
+      { id: '7', name: 'Vinho Tinto 3', price: 'R$ 300,00', image: require('./DonTinto.png') },
+      { id: '8', name: 'Vinho Branco 3', price: 'R$ 170,00', image: require('./fundo.jpg') },
+      { id: '9', name: 'Vinho Rosé 3', price: 'R$ 220,00', image: require('./fundoLogin.jpg') },
+    ],
+  ];
+
+  const addToCart = (vinho) => {
+    setCartItems([...cartItems, vinho]);
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Header toggleModal={toggleModal} toggleSearch={toggleSearch} navigateToHome={navigateToHome} cartItems={cartItems} />
+
+      <Text style={{ fontSize: 30, fontWeight: 'bold', margin: 20, textAlign: 'center' }}>Categorias</Text>
+
+      <ScrollView style={{ marginHorizontal: 10 }}>
+        {vinhosPorFileira.map((vinhos, index) => (
+          <View key={index}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>{fileiras[index]}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+              {vinhos.map((vinho) => (
+                <TouchableOpacity key={vinho.id} style={{ flex: 1 }} onPress={() => addToCart(vinho)}>
+                  <Image source={vinho.image} style={{ width: '100%', height: 100, borderRadius: 10, marginBottom: 5 }} />
+                  <Text style={{ fontSize: 16 }}>{vinho.name}</Text>
+                  <Text>{vinho.price}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
+      <TouchableOpacity onPress={navigateToHome} style={{ margin: 20, padding: 10, backgroundColor: 'rgba(200, 0, 0, 1.0)', borderRadius: 10 }}>
+        <Text style={{ color: 'white', fontSize: 18, textAlign: 'center' }}>Voltar para a tela principal</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
+export default CategoriasScreen;
